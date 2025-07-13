@@ -794,23 +794,8 @@ def index():
         headline = request.form.get('headline', '').strip()
         
         if headline:
-            pipeline, vectorizer, model, error = load_all_models()
-            
-            if error:
-                result = {
-                    'type': 'error',
-                    'message': f'Model Loading Error: {error}',
-                    'confidence': None,
-                    'explanation': 'Unable to load AI models for analysis',
-                    'fake_prob': None,
-                    'real_prob': None,
-                    'top_features': [],
-                    'word_count': 0,
-                    'total_features': 0,
-                    'active_features_count': 0
-                }
-            else:
-                result = analyze_headline_enhanced(headline, pipeline, vectorizer, model)
+            # For presentation demo - skip model loading and use demo predictions
+            result = get_demo_prediction(headline)
     
     return render_template_string(HTML_TEMPLATE, result=result, headline=headline)
 
