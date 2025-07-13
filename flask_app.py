@@ -17,18 +17,18 @@ def load_all_models():
             os.makedirs('Models')
         
         # Model file URLs and local paths
-        model_files = {
-            'Models/fake_news_rf_pipeline.pkl': 'https://drive.google.com/uc?export=download&id=1v5EIjyMa4ET_20QNNHy4TFgnLew2u_B_',
-            'Models/random_forest_model.pkl': 'https://drive.google.com/uc?export=download&id=1h2PqTpoiM6EHSKka6SFKoVKaJYKB-bpw',
-            'Models/tfidf_vectorizer.pkl': 'https://drive.google.com/uc?export=download&id=1jzwo-iVFWCSe6BCk6-LIED65dM7dE9-O'
-        }
+        #model_files = {
+            #'Models/fake_news_rf_pipeline.pkl': 'https://drive.google.com/uc?export=download&id=1v5EIjyMa4ET_20QNNHy4TFgnLew2u_B_',
+            #'Models/random_forest_model.pkl': 'https://drive.google.com/uc?export=download&id=1h2PqTpoiM6EHSKka6SFKoVKaJYKB-bpw',
+            #'Models/tfidf_vectorizer.pkl': 'https://drive.google.com/uc?export=download&id=1jzwo-iVFWCSe6BCk6-LIED65dM7dE9-O'
+        #}
         
         # Download models if they don't exist
-        for local_path, url in model_files.items():
-            if not os.path.exists(local_path):
-                print(f"Downloading {local_path}...")
-                urllib.request.urlretrieve(url, local_path)
-                print(f"Downloaded {local_path}")
+        #for local_path, url in model_files.items():
+            #if not os.path.exists(local_path):
+                #print(f"Downloading {local_path}...")
+                #urllib.request.urlretrieve(url, local_path)
+                #print(f"Downloaded {local_path}")
         
         # Load the models
         pipeline = joblib.load('Models/fake_news_rf_pipeline.pkl')
