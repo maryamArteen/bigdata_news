@@ -7,13 +7,39 @@ import os
 app = Flask(__name__)
 
 def load_all_models():
-    """Load all three model components"""
+    """Load all three model components - download from Google Drive if not found"""
+    import urllib.request
+    import os
+    
     try:
+        # Create Models directory if it doesn't exist
+        if not os.path.exists('Models'):
+            os.makedirs('Models')
+        
+        # Model file URLs and local paths
+        model_files = {
+            'Models/fake_news_rf_pipeline.pkl': 'https://drive.google.com/uc?export=download&id=1v5EIjyMa4ET_20QNNHy4TFgnLew2u_B_',
+            'Models/random_forest_model.pkl': 'https://drive.google.com/uc?export=download&id=1h2PqTpoiM6EHSKka6SFKoVKaJYKB-bpw',
+            'Models/tfidf_vectorizer.pkl': 'https://drive.google.com/uc?export=download&id=1jzwo-iVFWCSe6BCk6-LIED65dM7dE9-O'
+        }
+        
+        # Download models if they don't exist
+        for local_path, url in model_files.items():
+            if not os.path.exists(local_path):
+                print(f"Downloading {local_path}...")
+                urllib.request.urlretrieve(url, local_path)
+                print(f"Downloaded {local_path}")
+        
+        # Load the models
         pipeline = joblib.load('Models/fake_news_rf_pipeline.pkl')
         vectorizer = joblib.load('Models/tfidf_vectorizer.pkl')
         model = joblib.load('Models/random_forest_model.pkl')
+        
+        print("All models loaded successfully!")
         return pipeline, vectorizer, model, None
+        
     except Exception as e:
+        print(f"Error loading models: {str(e)}")
         return None, None, None, str(e)
 
 def analyze_headline_enhanced(headline, pipeline, vectorizer, model):
